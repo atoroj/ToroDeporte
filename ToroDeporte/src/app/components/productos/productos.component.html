@@ -1,0 +1,75 @@
+<div>
+    <!-- <div class="card-header">Productos</div> -->
+    <div class="card-body">
+      <h3 class="card-title">
+        <span>Listado de productos</span>
+        <button class="btn btn-outline-primary float-right ml-1" type="button" ngbTooltip="Crear producto" [routerLink]="['/productos/form/create']">
+          <fa-icon [icon]="faPlus"></fa-icon>
+        </button>
+        <button class="btn btn-rounded float-right btn-primary ml-1" type="button" ngbTooltip="Abrir grafica" (click)="abrirGrafica(grafica)">
+          <fa-icon [icon]="faChartBar"></fa-icon>
+        </button>
+        <button class="btn btn-rounded float-right btn-primary ml-1" type="button" ngbTooltip="Descargar pdf" (click)="descargarPdf()">
+          <fa-icon [icon]="faFilePdf"></fa-icon>
+        </button>
+        <button class="btn btn-rounded float-right btn-primary ml-1" type="button" ngbTooltip="Eliminar filtro" (click)="eliminarFiltro()">
+          <fa-icon [icon]="faEraser"></fa-icon>
+        </button>
+        <button class="btn btn-rounded float-right btn-primary ml-1" type="button" ngbTooltip="Guardar filtro" (click)="guardarFiltro()">
+          <fa-icon [icon]="faSearch"></fa-icon>
+        </button>
+      </h3>
+      <!-- <div class="my-2 text-right">
+        
+      </div> -->
+      <div class="alert alert-info" *ngIf="productosPaginated?.length==0">
+          No hay registros en la base de datos
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" name="filterNombre" placeholder="Buscar por nombre..." [(ngModel)]="filterNombre">
+      </div>
+      <table id="productos" class="table table-striped" *ngIf="productosPaginated?.length>0">
+        <thead>
+          <tr class="text-primary">
+            <th style="width: 64px"></th>
+            <th>Nombre</th>
+            <th>Categoria</th>
+            <th>Precio</th>
+            <th>Coste</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let producto of productosPaginated | filterProducto: filterNombre">
+            <td >
+              <img *ngIf="producto?.fotoProducto" src="http://localhost:8080/api/uploads/img/{{producto.fotoProducto}}" alt="{{producto.fotoProducto}}" class="img-thumbnail rounded" 
+              style="width: 64px"/>
+            </td>
+            <td>{{ producto.nombreProducto }}</td>
+            <td>{{ producto.categoriaProducto }}</td>
+            <td>{{ producto.precioProducto }}</td>
+            <td>{{ producto.costeProducto }}</td>
+            <td class="text-rigth">
+              <button type="button" name="editar" ngbTooltip="Editar" [routerLink]="['/productos/form', producto.idProducto, 'edit']" class="btn btn-primary btn-sm ml-1"><fa-icon [icon]="faPencilAlt"></fa-icon></button>
+              <button type="button" *ngIf="hasRole('ROLE_ENCARGADO')" name="eliminar" ngbTooltip="Eliminar" (click)="deleteProducto(producto.idProducto)" class="btn btn-danger btn-sm ml-1"><fa-icon [icon]="faTrashAlt"></fa-icon></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <ngb-pagination class="d-flex justify-content-center" [collectionSize]="totalItems" [(page)]="page" (pageChange)="loadAll()" [boundaryLinks]="true"></ngb-pagination>
+    </div>
+  </div>
+  <ng-template #grafica let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Porcentaje de beneficio</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <canvas id="graficaProducto" width="400" height="400">{{graficaData}}</canvas>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss()"><fa-icon [icon]="faArrowLeft"></fa-icon>&nbsp;Salir</button>
+    </div>
+  </ng-template>

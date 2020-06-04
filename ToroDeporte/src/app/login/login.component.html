@@ -1,0 +1,21 @@
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+    <div *ngIf="errorLogin" class="alert alert-danger" role="alert">
+      <b>Error,</b> credenciales incorrectas.
+    </div>
+    <!-- Icon -->
+    <div class="fadeIn first">
+      <img src="https://img.playbuzz.com/image/upload/ar_1.3333333333333333,c_crop/q_auto:good,f_auto,fl_lossy,w_640,c_limit/v1514117591/cpvx1mgy049ayhxzc7j4.png" id="icon" alt="User Icon" />
+      <h1>Toro Deporte</h1>
+    </div>
+
+    <!-- Login Form -->
+    <form (ngSubmit)="login()" [formGroup]="loginForm">
+      <input type="text" id="login" class="fadeIn second" name="login" placeholder="Usuario" formControlName="username">
+      <input type="password" id="password" class="fadeIn third" name="login" placeholder="Contraseña" formControlName="password">
+      <input type="submit" class="fadeIn fourth" value="Log In">
+    </form>
+
+  </div>
+</div>
