@@ -4,12 +4,13 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../auth/login/auth.page';
 import { Observable } from 'rxjs';
 import { Producto } from '../../model/productos.model';
+import { SERVER_API_LOCAL } from '../../../assets/constantes';
 
 @Injectable({
     providedIn: 'root'
   })
   export class ProductosService {
-    private url: string = 'http://localhost:8080/api/productos';
+    private url: string = SERVER_API_LOCAL+'/api/productos';
     private httpHeaders = new HttpHeaders({'Content-Type': 'application/json'});
 
     constructor(private http: HttpClient, private router: Router, private authService: AuthService) { }

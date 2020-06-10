@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Empleado } from '../../model/empleados.model';
-
+import { SERVER_API_LOCAL } from '../../../assets/constantes';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   login(empleado: Empleado): Observable<any> {
-    let url = 'http://localhost:8080/oauth/token';
+    let url = SERVER_API_LOCAL+'/oauth/token';
     let credenciales = btoa('torodeporte' + ':' + 'sevilla');
     const httpHeaders = new HttpHeaders()
       .set('content-type', 'application/x-www-form-urlencoded')

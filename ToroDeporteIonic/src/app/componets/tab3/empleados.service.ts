@@ -5,12 +5,13 @@ import { AuthService } from '../../auth/login/auth.page';
 import { Observable } from 'rxjs';
 import { Producto } from '../../model/productos.model';
 import { Empleado } from 'src/app/model/empleados.model';
+import { SERVER_API_LOCAL } from '../../../assets/constantes';
 
 @Injectable({
     providedIn: 'root'
 })
 export class EmpleadosService {
-    private url: string = 'http://localhost:8080/api/empleados';
+    private url: string = SERVER_API_LOCAL+'/api/empleados';
     private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     constructor(private http: HttpClient, private router: Router, private authService: AuthService) { }
