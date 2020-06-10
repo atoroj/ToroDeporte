@@ -18,6 +18,7 @@ import { Empleado, Rol } from './empleados.model';
     faSave = faSave;
     faBan = faBan;
     roles: Rol[];
+    errorCreate: boolean;
     contrasena: string;
     empleadoForm = this.fb.group({
       idEmpleados: [''],
@@ -46,7 +47,8 @@ import { Empleado, Rol } from './empleados.model';
               apellidosEmpleados: res.apellidosEmpleados,
               dniEmpleados: res.dniEmpleados,
               usernameEmpleados: res.usernameEmpleados,
-              cargoEmpleados: res.cargoEmpleados == 1 ? 'ROLE_ENCARGADO' : 'ROLE_DEPENDIENTE'
+              cargoEmpleados: res.cargoEmpleados == 1 ? 'ROLE_ENCARGADO' : 'ROLE_DEPENDIENTE',
+              contrasenaEmpleados: res.contrasenaEmpleados
             })
             this.contrasena = res.contrasenaEmpleados;
           })
@@ -80,11 +82,21 @@ import { Empleado, Rol } from './empleados.model';
         this.empleadoService.createEmpleado(empleado).subscribe(res => {
           this.router.navigate(['/empleados'])
           swal('Nuevo producto', `Producto ${empleado.idEmpleados} creado con éxito!`, 'success')
+        },error =>{
+          if(error.status == 500){
+            this.errorCreate = true;
+            setTimeout(() => {this.hideMessage()}, 3000)}
         });
       }else{
         this.updateEmpleado(empleado);
       }
     }
+    disabledButton(){
+      if( this.empleadoForm.value.nombreEmpleados && this.empleadoForm.value.apellidosEmpleados
+      && this.empleadoForm.value.dniEmpleados && this.empleadoForm.value.usernameEmpleados && this.empleadoForm.value.contrasenaEmpleados && this.empleadoForm.value.cargoEmpleados){
+        return false;
+      }else return true;
+  }
     updateEmpleado(empleado: any){
       this.empleadoService.updateEmpleado(empleado.idEmpleados, empleado).subscribe(res => {
         this.router.navigate(['/empleados'])
@@ -93,5 +105,8 @@ import { Empleado, Rol } from './empleados.model';
     }
     cancelEmpleado() {
       this.location.back();
+    }
+    hideMessage(){
+      this.errorCreate = false;
     }
 }

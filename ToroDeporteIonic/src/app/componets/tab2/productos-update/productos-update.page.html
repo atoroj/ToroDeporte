@@ -10,13 +10,13 @@
     <ion-col size="6">
       <ion-item>
         <ion-label position="floating">Nombre</ion-label>
-        <ion-input [(ngModel)]="nombreProducto" type="text" name="nombre"></ion-input>
+        <ion-input [(ngModel)]="nombreProducto" type="text" maxlength="30" name="nombre"></ion-input>
       </ion-item>
     </ion-col>
     <ion-col size="6">
       <ion-item>
         <ion-label position="floating">Categoría</ion-label>
-        <ion-input [(ngModel)]="categoriaProducto" type="text" name="categoria"></ion-input>
+        <ion-input [(ngModel)]="categoriaProducto" type="text" maxlength="25" name="categoria"></ion-input>
       </ion-item>
     </ion-col>
   </ion-row>
@@ -24,23 +24,23 @@
     <ion-col size="4">
       <ion-item>
         <ion-label position="floating">Precio</ion-label>
-        <ion-input [(ngModel)]="precioProducto" type="text" name="precio"></ion-input>
+        <ion-input [(ngModel)]="precioProducto" type="number" name="precio"></ion-input>
       </ion-item>
     </ion-col>
     <ion-col size="4">
       <ion-item>
         <ion-label position="floating">Coste</ion-label>
-        <ion-input [(ngModel)]="costeProducto" type="text" name="coste"></ion-input>
+        <ion-input [(ngModel)]="costeProducto" type="number" name="coste"></ion-input>
       </ion-item>
     </ion-col>
     <ion-col size="4">
       <ion-item>
         <ion-label position="floating">Stock</ion-label>
-        <ion-input [(ngModel)]="stockProducto" type="text" name="stock"></ion-input>
+        <ion-input [(ngModel)]="stockProducto" type="number" name="stock"></ion-input>
       </ion-item>
     </ion-col>
   </ion-row>
   <br>
   <ion-button color="danger" expand="block"  (click)="cancelProducto()">Cancelar</ion-button>
-  <ion-button expand="block" (click)="createProducto()">Enviar</ion-button>
+  <ion-button expand="block" [disabled]="disabledButton()" (click)="createProducto()">Enviar</ion-button>
 </ion-content>

@@ -10,13 +10,13 @@
     <ion-col size="6">
       <ion-item>
         <ion-label position="floating">Nombre</ion-label>
-        <ion-input [(ngModel)]="nombreEmpleado" type="text" name="nombre"></ion-input>
+        <ion-input [(ngModel)]="nombreEmpleado" type="text" maxlength="30" name="nombre"></ion-input>
       </ion-item>
     </ion-col>
     <ion-col size="6">
       <ion-item>
         <ion-label position="floating">Apellidos</ion-label>
-        <ion-input [(ngModel)]="apellidoEmpleado" type="text" name="apellido"></ion-input>
+        <ion-input [(ngModel)]="apellidoEmpleado" type="text" maxlength="40" name="apellido"></ion-input>
       </ion-item>
     </ion-col>
   </ion-row>
@@ -47,17 +47,17 @@
     <ion-col size="6">
       <ion-item>
         <ion-label position="floating">Username</ion-label>
-        <ion-input [(ngModel)]="usernameEmpleado" type="text" name="username"></ion-input>
+        <ion-input [(ngModel)]="usernameEmpleado" maxlength="15" type="text" name="username"></ion-input>
       </ion-item>
     </ion-col>
     <ion-col size="6" >
       <ion-item *ngIf="!isEdit">
         <ion-label position="floating">Contraseña</ion-label>
-        <ion-input [(ngModel)]="contrasenaEmpleado" type="password" name="contrasena"></ion-input>
+        <ion-input [(ngModel)]="contrasenaEmpleado" maxlength="15" type="password" name="contrasena"></ion-input>
       </ion-item>
     </ion-col>
   </ion-row>
   <br>
   <ion-button color="danger" expand="block" (click)="cancelEmpleado()">Cancelar</ion-button>
-  <ion-button expand="block" (click)="createEmpleado()">Enviar</ion-button>
+  <ion-button expand="block" [disabled]="disabledButton()" (click)="createEmpleado()">Enviar</ion-button>
 </ion-content>

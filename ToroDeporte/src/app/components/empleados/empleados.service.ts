@@ -4,12 +4,13 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { AuthService } from '../../login/auth.service';
 import { Empleado, Rol } from './empleados.model';
+import { URL_BACKEND } from '../../config/config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmpleadosService {
-  private url: string = 'http://localhost:8080/api/empleados';
+  private url: string = URL_BACKEND+'/api/empleados';
   private httpHeaders = new HttpHeaders({'Content-Type': 'application/json'});
   
   constructor(private http: HttpClient, private router: Router, private authService: AuthService) { }

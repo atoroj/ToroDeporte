@@ -43,7 +43,7 @@
         <tbody>
           <tr *ngFor="let producto of productosPaginated | filterProducto: filterNombre">
             <td >
-              <img *ngIf="producto?.fotoProducto" src="http://localhost:8080/api/uploads/img/{{producto.fotoProducto}}" alt="{{producto.fotoProducto}}" class="img-thumbnail rounded" 
+              <img *ngIf="producto?.fotoProducto" src="{{urlHeroku}}/api/uploads/img/{{producto.fotoProducto}}" alt="{{producto.fotoProducto}}" class="img-thumbnail rounded" 
               style="width: 64px"/>
             </td>
             <td>{{ producto.nombreProducto }}</td>

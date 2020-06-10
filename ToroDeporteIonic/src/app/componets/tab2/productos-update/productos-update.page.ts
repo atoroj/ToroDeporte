@@ -69,7 +69,12 @@ export class ProductosUpdatePage implements OnInit {
       this.updateProducto(producto);
     }
   }
-
+  disabledButton(){
+    if( this.nombreProducto && this.categoriaProducto
+    && this.precioProducto && this.costeProducto && this.stockProducto){
+      return false;
+    }else return true;
+}
   updateProducto(producto: any){
     this.productoService.updateProducto(producto.idProducto, producto).subscribe(res => {
       this.navCtrl.navigateRoot('/tabs/productos');

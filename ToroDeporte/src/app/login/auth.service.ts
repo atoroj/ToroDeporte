@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { IEmpleado } from './empleado.model';
 import { Router } from '@angular/router';
+import { URL_BACKEND } from '../config/config';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   login(empleado: IEmpleado): Observable<any> {
-    let url = 'http://localhost:8080/oauth/token';
+    let url = URL_BACKEND+'/oauth/token';
     let credenciales = btoa('torodeporte' + ':' + 'sevilla');
     const httpHeaders = new HttpHeaders()
       .set('content-type', 'application/x-www-form-urlencoded')

@@ -7,7 +7,7 @@ import jsPDF from 'jspdf'
 import 'jspdf-autotable';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Chart } from 'chart.js';
-
+import { URL_BACKEND } from '../../config/config';
 @Component({
   selector: 'app-productos',
   templateUrl: './productos.component.html',
@@ -29,6 +29,7 @@ export class ProductosComponent implements OnInit {
   roles: string[];
   filterNombre: string = '';
   graficaData: Chart;
+  urlHeroku: string = URL_BACKEND;
   constructor(private productoService: ProductosService, private modalService: NgbModal) { }
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {

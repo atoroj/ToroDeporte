@@ -69,7 +69,12 @@ export class EmpleadosUpdatePage implements OnInit {
     }
     return entity;
   }
-
+  disabledButton(){
+    if( this.nombreEmpleado && this.apellidoEmpleado
+    && this.dniEmpleado && this.usernameEmpleado && (this.contrasena || this.contrasenaEmpleado) && this.cargoEmpleado){
+      return false;
+    }else return true;
+}
   createEmpleado(){
     let empleado = this.createFromForm();
     if(!this.isEdit && !this.isView || !empleado.idEmpleados){

@@ -1,14 +1,18 @@
 .header-row{
     font-weight: bold;
     font-size: small;
-    border-bottom: 1px solid #000;
+    border-bottom: 1px solid #DCDCDC;
+    background-color: #F3F3F3;
 }
 
 .data-row{
     border-bottom: 1px solid #DCDCDC;
     font-size: 15px;
+    
 }
-
+.headerStyle{
+    margin-top: 1%;
+}
 .btnIonic{
     width: 35px;
 }

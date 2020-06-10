@@ -2,6 +2,9 @@
     <h2>Crear o editar empleado</h2>
 </div>
 <hr/>
+<div *ngIf="errorCreate" class="alert alert-danger" role="alert">
+  <b>Error,</b> error al crear empleado.
+</div>
 <div class="row justify-content-center">
     <div class="col-12">
         <form [formGroup]="empleadoForm">
@@ -32,7 +35,7 @@
                     <label for="precio" class="col-form-label">Cargo</label>
                     <input type="text" class="form-control  form-control-sm" formControlName="cargoEmpleados" name="precio">
                 </div> -->
-                <div class="form-group col-md-3">
+                <div *ngIf="!isEdit && !isView" class="form-group col-md-3">
                   <label for="Cargo" class="col-form-label">Cargo</label>
                   <select class="form-control form-control-sm custom-select" id="Cargo" name="Cargo" formControlName="cargoEmpleados">
                     <option value="ROLE_ENCARGADO">Encargado</option>
@@ -45,7 +48,7 @@
             <button class="btn btn-danger ml-1" (click)="cancelEmpleado()" role="button">
               <fa-icon [icon]="faBan"></fa-icon>&nbsp;<span>Salir</span>
             </button>
-            <button class="btn btn-primary ml-1" (click)="createEmpleado()" role="button">
+            <button class="btn btn-primary ml-1" [disabled]="disabledButton()" (click)="createEmpleado()" role="button">
               <fa-icon [icon]="faSave"></fa-icon>&nbsp;<span>Guardar</span>
             </button>
           </div>
