@@ -1,5 +1,10 @@
-<nav *ngIf="authService.isAuthenticated()" class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#"> {{ title }}</a>
+<nav *ngIf="authService.isAuthenticated()" class="navbar navbar-expand-lg navbar-light bg-light">
+  <img src="assets/logo.png" class="ml-4" id="icon" style="width: 3%;" />
+  <div>
+    <a class="navbar-brand mb-0 h1 ml-3" href="#">
+    <span class="title-short navbar-title">{{ title }}</span></a>
+  </div>
+    
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -7,25 +12,23 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <!-- <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" routerLink="/home">Home</a>
-      </li> -->
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/productos">Productos</a>
+        <a class="nav-link" routerLink="/home"><fa-icon [icon]="faHome"></fa-icon>&nbsp;Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/empleados">Empleados</a>
+        <a class="nav-link" routerLink="/productos"><fa-icon [icon]="faBoxOpen"></fa-icon>&nbsp;Productos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/empleados"><fa-icon [icon]="faUsers"></fa-icon>&nbsp;Empleados</a>
       </li>
     </ul>
-    <li>
-      <button class="btn btn-danger my-2 my-sm-0" (click)="cerrarSesion()">
-        <fa-icon [icon]="faSignOutAlt"></fa-icon>&nbsp;<span>Cerrar sesión</span></button>
-    </li>
-    <!-- <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form> -->
+    <div class="col text-right mr-10">
+      <div ngbDropdown class="d-inline-block"placement="bottom-right" display="dynamic">
+        <button class="btn btn-outline-dark" id="cuenta" ngbDropdownToggle><fa-icon [icon]="faUser"></fa-icon>&nbsp;Cuenta</button>
+        <div ngbDropdownMenu aria-labelledby="cuenta">
+          <button class="btn btn-danger my-2 my-sm-0" (click)="cambiarPassword()" ngbDropdownItem><fa-icon [icon]="faKey"></fa-icon>&nbsp;Cambiar contraseña</button>
+          <button class="btn btn-danger my-2 my-sm-0" (click)="cerrarSesion()" ngbDropdownItem><fa-icon [icon]="faSignOutAlt"></fa-icon>&nbsp;Cerrar sesión</button>
+        </div>
+      </div>
+    </div>
   </div>
 </nav>

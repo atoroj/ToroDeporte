@@ -1,0 +1,53 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      <h4>Productos</h4>
+    </ion-title>
+    <ion-button slot="end" size="small" class="button  button-assertive mr-3" color="light" type="button"
+      [routerLink]="['/tabs/productos/create']">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row class="header-row ml-4 mr-2 mt-3">
+    <ion-col size="3">
+      Nombre
+    </ion-col>
+    <ion-col size="3">
+      Categoria
+    </ion-col>
+    <ion-col size="2">
+      Precio
+    </ion-col>
+    <ion-col size="2">
+      Coste
+    </ion-col>
+    <ion-col size="2">
+      <!-- Acciones -->
+    </ion-col>
+  </ion-row>
+  <ion-row *ngFor="let producto of productosPaginated" class="data-row ml-4 mr-2">
+    <ion-col size="3">
+      {{ producto.nombreProducto }}
+    </ion-col>
+    <ion-col size="3">
+      {{ producto.categoriaProducto }}
+    </ion-col>
+    <ion-col size="2">
+      {{ producto.precioProducto }}
+    </ion-col>
+    <ion-col size="2">
+      {{ producto.costeProducto }}
+    </ion-col>
+    <ion-col size="2">
+      <ion-button  size="small" class="button  button-assertive" [routerLink]="[producto.idProducto, 'edit']" color="primary" type="button">
+        <ion-icon name="pencil-outline"></ion-icon>
+      </ion-button>
+      <ion-button size="small" *ngIf="hasRole('ROLE_ENCARGADO')" class="button  button-assertive" (click)="eliminarProducto(producto.idProducto)" color="danger" type="button">
+        <ion-icon name="close-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-content>

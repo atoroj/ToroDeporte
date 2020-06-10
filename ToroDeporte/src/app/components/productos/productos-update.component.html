@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
   <div>
-   <h2>Crear producto</h2>
+   <h2>Crear o editar producto</h2>
   </div>
   <hr/>
   <div class="row justify-content-center">
@@ -9,25 +9,29 @@
         <div class="form-row">
           <div class="form-group col-md-5">
             <label for="nombre" class="col-form-label">Nombre</label>
-            <input type="text" class="form-control form-control-sm" formControlName="nombreProducto" name="nombre">
+            <input type="text" class="form-control form-control-sm" maxlength="40" formControlName="nombreProducto" name="nombre">
           </div>
           <div class="form-group col-md-5">
             <label for="categoria" class="col-form-label">Categoria</label>
-            <input type="text" class="form-control form-control-sm" formControlName="categoriaProducto" name="categoria">
+            <input type="text" class="form-control form-control-sm" maxlength="20" formControlName="categoriaProducto" name="categoria">
           </div>
         </div>
   
         <div class="form-row">
-          <div class="form-group col-md-5">
+          <div class="form-group col-md-4">
             <label for="precio" class="col-form-label">Precio</label>
-            <input type="text" class="form-control  form-control-sm" formControlName="precioProducto" name="precio">
+            <input type="number" class="form-control  form-control-sm" formControlName="precioProducto" name="precio">
           </div>
-          <div class="form-group col-md-5">
+          <div class="form-group col-md-4">
             <label for="coste" class="col-form-label">Coste</label>
-            <input type="text" class="form-control  form-control-sm" formControlName="costeProducto" name="coste">
+            <input type="number" class="form-control  form-control-sm" formControlName="costeProducto" name="coste">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="coste" class="col-form-label">Stock</label>
+            <input type="number" class="form-control  form-control-sm" formControlName="stockProducto" name="coste">
           </div>
         </div>
-        <div class="form-row">
+        <div *ngIf="isEdit" class="form-row">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
               <button class="btn btn-outline-secondary" (click)="subirFoto()" type="button" id="fotoProducto">Guardar</button>
@@ -47,9 +51,9 @@
         </form>
           <div class="text-right">
             <button class="btn btn-danger ml-1" (click)="cancelProducto()" role="button">
-              <fa-icon [icon]="faBan"></fa-icon>&nbsp;<span>Cancelar</span>
+              <fa-icon [icon]="faBan"></fa-icon>&nbsp;<span>Salir</span>
             </button>
-            <button class="btn btn-primary ml-1" (click)="createProducto()" role="button">
+            <button class="btn btn-primary ml-1" [disabled]="disabledButton()" (click)="createProducto()" role="button">
               <fa-icon [icon]="faSave"></fa-icon>&nbsp;<span>Guardar</span>
             </button>
             <!-- <button class="btn btn-primary btn-sm ml-1" role="button">Editar</button> -->

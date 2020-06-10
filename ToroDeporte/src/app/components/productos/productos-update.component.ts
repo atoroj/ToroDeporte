@@ -9,7 +9,7 @@ import { HttpEventType } from '@angular/common/http';
 import { Location } from '@angular/common';
 
 @Component({
-    selector: 'app-form',
+    selector: 'productos-form',
     templateUrl: './productos-update.component.html',
     styleUrls: ['./productos.component.scss']
   })
@@ -17,6 +17,7 @@ import { Location } from '@angular/common';
     faSave = faSave;
     faBan = faBan;
     isEdit: boolean;
+    isView: boolean;
     fotoSeleccionada: File;
     progreso: number = 0;
     productoForm = this.fb.group({
@@ -25,13 +26,15 @@ import { Location } from '@angular/common';
         categoriaProducto: [''],
         precioProducto: [],
         costeProducto: [],
-        fotoProducto: []
+        fotoProducto: [],
+        stockProducto: []
       });
     productoCargado: Producto;
     constructor(private fb: FormBuilder, private productoService: ProductosService, private router: Router, private activatedRoute: ActivatedRoute, private location: Location){}
     ngOnInit() {
-      this.isEdit = window.location.pathname.toLowerCase().endsWith('edit')
-        this.cargarProducto();
+      this.isEdit = window.location.pathname.toLowerCase().endsWith('edit');
+      this.isView = window.location.pathname.toLowerCase().endsWith('view');
+      this.cargarProducto();
     }
 
     cargarProducto(): void{
@@ -45,7 +48,8 @@ import { Location } from '@angular/common';
               categoriaProducto: res.categoriaProducto,
               precioProducto: res.precioProducto,
               costeProducto: res.costeProducto,
-              fotoProducto: res.fotoProducto
+              fotoProducto: res.fotoProducto,
+              stockProducto: res.stockProducto
             })
           })
         }
@@ -60,20 +64,32 @@ import { Location } from '@angular/common';
         categoriaProducto: this.productoForm.get(['categoriaProducto']).value,
         precioProducto: this.productoForm.get(['precioProducto']).value,
         costeProducto: this.productoForm.get(['costeProducto']).value,
-        fotoProducto: this.productoForm.get(['fotoProducto']).value
+        fotoProducto: this.productoForm.get(['fotoProducto']).value,
+        stockProducto: this.productoForm.get(['stockProducto']).value
       }
       return entity;
     }
-    createProducto(){
-      let producto = this.createFromForm(); 
-      this.productoService.createProductos(producto).subscribe(res => {
-        this.router.navigate(['/productos'])
-        swal('Nuevo producto', `Producto ${producto.idProducto} creado con éxito!`, 'success')
-      });
+
+    disabledButton(){
+        if( this.productoForm.value.nombreProducto && this.productoForm.value.categoriaProducto
+        && this.productoForm.value.precioProducto && this.productoForm.value.costeProducto && this.productoForm.value.stockProducto){
+          return false;
+        }else return true;
     }
 
-    updateProducto(){
+    createProducto(){
       let producto = this.createFromForm();
+      if(!this.isEdit && !this.isView || !producto.idProducto){
+        this.productoService.createProductos(producto).subscribe(res => {
+          this.router.navigate(['/productos'])
+          swal('Nuevo producto', `Producto ${producto.idProducto} creado con éxito!`, 'success')
+        });
+      }else{
+        this.updateProducto(producto);
+      }
+    }
+
+    updateProducto(producto: any){
       this.productoService.updateProducto(producto.idProducto, producto).subscribe(res => {
         this.router.navigate(['/productos'])
         swal('Producto actualizado', `Producto ${producto.idProducto} actualizado con éxito!`, 'success')

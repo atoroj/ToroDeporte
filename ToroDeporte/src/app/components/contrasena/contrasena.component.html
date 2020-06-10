@@ -1,0 +1,29 @@
+<div>
+    <h2>Cambiar contraseña</h2>
+</div>
+<hr/>
+<div *ngIf="isError" class="alert alert-danger" role="alert">
+  Las contraseñas deben coincidir!
+</div>
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form [formGroup]="contrasenaForm">
+                <div class="form-group">
+                    <label for="pass" class="form-control-label">Nueva contraseña</label>
+                    <input type="password" class="form-control" formControlName="contrasenaNueva" name="pass">
+                </div>
+                <div class="form-group">
+                    <label for="newpass" class="form-control-label">Confirmar contraseña</label>
+                    <input type="password" class="form-control" formControlName="confirmarNueva" name="newpass">
+                </div>
+        </form>
+        <div class="text-right">
+            <button class="btn btn-danger ml-1" (click)="leftContrasena()" role="button">
+              <fa-icon [icon]="faBan"></fa-icon>&nbsp;<span>Salir</span>
+            </button>
+            <button class="btn btn-primary ml-1" (click)="saveContrasena()" role="button">
+              <fa-icon [icon]="faSave"></fa-icon>&nbsp;<span>Guardar</span>
+            </button>
+          </div>
+    </div>
+</div>

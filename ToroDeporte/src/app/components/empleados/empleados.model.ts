@@ -3,14 +3,15 @@ export class Empleado {
     nombreEmpleados: string;
     apellidosEmpleados: string;
     contrasenaEmpleados: string;
-    enabledEmpleados?: string;
+    enabledEmpleados?: number;
     dniEmpleados: string;
     usernameEmpleados: string;
-    cargoEmpleados: string;
+    cargoEmpleados: number;
     roles: Rol[];
 }
 
 export class Rol {
+    [x: string]: any;
     idRol: number;
     nombreRol: string;
 }

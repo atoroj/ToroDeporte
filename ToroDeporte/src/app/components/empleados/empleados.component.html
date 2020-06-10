@@ -2,17 +2,26 @@
     <div class="card-body">
         <h3 class="card-title">
             <span>Listado de empleados</span>
+            <button class="btn btn-outline-primary float-right ml-1" *ngIf="hasRole('ROLE_ENCARGADO')" type="button" ngbTooltip="Crear empleado" [routerLink]="['/empleados/form/create']">
+              <fa-icon [icon]="faPlus"></fa-icon>
+            </button>
+            <button class="btn btn-rounded float-right btn-primary ml-1" type="button" ngbTooltip="Eliminar filtro" (click)="eliminarFiltro()">
+              <fa-icon [icon]="faEraser"></fa-icon>
+            </button>
+            <button class="btn btn-rounded float-right btn-primary ml-1" type="button" ngbTooltip="Guardar filtro" (click)="guardarFiltro()">
+              <fa-icon [icon]="faSearch"></fa-icon>
+            </button>
         </h3>
-    </div>
+    
     <div class="alert alert-info" *ngIf="empleadosPaginated?.length==0">
         No hay registros en la base de datos
     </div>
     <div class="form-group">
-        <input type="text" class="form-control" name="filterNombre" placeholder="Buscar por nombre...">
+        <input type="text" class="form-control" name="filterNombre" placeholder="Buscar por apellido..." [(ngModel)]="filterNombre">
     </div>
     <table id="empleados" class="table table-striped" *ngIf="empleadosPaginated?.length>0">
         <thead>
-          <tr class="text-primary">
+          <tr class="text-dark">
             <!-- <th style="width: 64px"></th> -->
             <th>Nombre</th>
             <th>Apellidos</th>
@@ -22,7 +31,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let empleado of empleadosPaginated">
+          <tr *ngFor="let empleado of empleadosList | filterEmpleado: filterNombre">
             <!-- <td >
               <img *ngIf="producto?.fotoProducto" src="http://localhost:8080/api/uploads/img/{{producto.fotoProducto}}" alt="{{producto.fotoProducto}}" class="img-thumbnail rounded" 
               style="width: 64px"/>
@@ -32,11 +41,12 @@
             <td>{{ empleado.dniEmpleados }}</td>
             <td>{{ empleado.cargoEmpleados }}</td>
             <td class="text-rigth">
-              <button *ngIf="hasRole('ROLE_ENCARGADO')" type="button" name="editar" ngbTooltip="Editar" class="btn btn-primary btn-sm ml-1"><fa-icon [icon]="faPencilAlt"></fa-icon></button>
-              <button *ngIf="hasRole('ROLE_ENCARGADO')" type="button" name="eliminar" ngbTooltip="Eliminar" class="btn btn-danger btn-sm ml-1"><fa-icon [icon]="faTrashAlt"></fa-icon></button>
+              <button *ngIf="hasRole('ROLE_ENCARGADO')" type="button" name="editar" [routerLink]="['/empleados/form', empleado.idEmpleados, 'edit']" ngbTooltip="Editar" class="btn btn-primary btn-sm ml-1"><fa-icon [icon]="faPencilAlt"></fa-icon></button>
+              <button *ngIf="hasRole('ROLE_ENCARGADO')" type="button" name="eliminar" (click)="deleteEmpleado(empleado.idEmpleados)" ngbTooltip="Eliminar" class="btn btn-danger btn-sm ml-1"><fa-icon [icon]="faTrashAlt"></fa-icon></button>
             </td>
           </tr>
         </tbody>
       </table>
       <ngb-pagination class="d-flex justify-content-center" [collectionSize]="totalItems" [(page)]="page" (pageChange)="loadAll()" [boundaryLinks]="true"></ngb-pagination>
+    </div>
 </div>

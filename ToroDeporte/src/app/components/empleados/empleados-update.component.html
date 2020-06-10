@@ -1,0 +1,53 @@
+<div>
+    <h2>Crear o editar empleado</h2>
+</div>
+<hr/>
+<div class="row justify-content-center">
+    <div class="col-12">
+        <form [formGroup]="empleadoForm">
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                  <label for="nombre" class="col-form-label">Nombre</label>
+                  <input type="text" class="form-control form-control-sm" formControlName="nombreEmpleados" name="nombre">
+                </div>
+                <div class="form-group col-md-5">
+                  <label for="apellidos" class="col-form-label">Apellidos</label>
+                  <input type="text" class="form-control form-control-sm" formControlName="apellidosEmpleados" name="apellidos">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="dni" class="col-form-label">DNI</label>
+                    <input type="text" class="form-control form-control-sm" maxlength="9" formControlName="dniEmpleados" name="dni">
+                  </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label for="Username" class="col-form-label">Nombre de usuario</label>
+                  <input type="text" class="form-control  form-control-sm" formControlName="usernameEmpleados" name="Username">
+                </div>
+                <div *ngIf="!isEdit && !isView" class="form-group col-md-5">
+                  <label for="Contrasena" class="col-form-label">Contraseña</label>
+                  <input type="password" class="form-control  form-control-sm" formControlName="contrasenaEmpleados" name="Contrasena">
+                </div>
+                <!-- <div class="form-group col-md-3">
+                    <label for="precio" class="col-form-label">Cargo</label>
+                    <input type="text" class="form-control  form-control-sm" formControlName="cargoEmpleados" name="precio">
+                </div> -->
+                <div class="form-group col-md-3">
+                  <label for="Cargo" class="col-form-label">Cargo</label>
+                  <select class="form-control form-control-sm custom-select" id="Cargo" name="Cargo" formControlName="cargoEmpleados">
+                    <option value="ROLE_ENCARGADO">Encargado</option>
+                    <option value="ROLE_DEPENDIENTE">Dependiente</option>
+                  </select>
+                </div>
+              </div>
+        </form>
+        <div class="text-right">
+            <button class="btn btn-danger ml-1" (click)="cancelEmpleado()" role="button">
+              <fa-icon [icon]="faBan"></fa-icon>&nbsp;<span>Salir</span>
+            </button>
+            <button class="btn btn-primary ml-1" (click)="createEmpleado()" role="button">
+              <fa-icon [icon]="faSave"></fa-icon>&nbsp;<span>Guardar</span>
+            </button>
+          </div>
+    </div>
+</div>

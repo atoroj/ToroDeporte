@@ -18,3 +18,22 @@ export class FilterPipe implements PipeTransform {
   }
 
 }
+
+@Pipe({
+  name: 'filterEmpleado'
+})
+export class FilterPipeEmpleado implements PipeTransform {
+
+  transform(value: any, filtro: any): any {
+    const resultadoFiltro = [];
+    if(filtro !== ''){
+    for(const resultado of value){
+      if(resultado.apellidosEmpleados.toLowerCase().indexOf(filtro.toLowerCase()) >-1){
+        resultadoFiltro.push(resultado);
+      }
+    }
+    return resultadoFiltro;
+  }else return value;
+  }
+
+}

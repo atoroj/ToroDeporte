@@ -1,0 +1,52 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      <h4>Empleados</h4>
+    </ion-title>
+    <ion-button *ngIf="hasRole('ROLE_ENCARGADO')" slot="end" size="small" class="button  button-assertive mr-3" color="light" type="button" [routerLink]="['/tabs/empleados/create']">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-row class="header-row ml-4 mr-2 mt-3">
+    <ion-col size="3">
+      Nombre
+    </ion-col>
+    <ion-col size="3">
+      Apellidos
+    </ion-col>
+    <ion-col size="2">
+      DNI
+    </ion-col>
+    <ion-col size="2">
+      Cargo
+    </ion-col>
+    <ion-col size="2">
+      <!-- Acciones -->
+    </ion-col>
+  </ion-row>
+  <ion-row *ngFor="let empleado of empleadosPaginated" class="data-row ml-4 mr-2">
+    <ion-col size="3">
+      {{ empleado.nombreEmpleados }}
+    </ion-col>
+    <ion-col size="3">
+      {{ empleado.apellidosEmpleados }}
+    </ion-col>
+    <ion-col size="2">
+      {{ empleado.dniEmpleados }}
+    </ion-col>
+    <ion-col size="2">
+      {{ empleado.cargoEmpleados }}
+    </ion-col>
+    <ion-col size="2">
+      <ion-button  *ngIf="hasRole('ROLE_ENCARGADO')" size="small" class="button  button-assertive" [routerLink]="[empleado.idEmpleados, 'edit']" color="primary" type="button">
+        <ion-icon name="pencil-outline"></ion-icon>
+      </ion-button>
+      <ion-button *ngIf="hasRole('ROLE_ENCARGADO')" size="small" class="button  button-assertive" color="danger" type="button">
+        <ion-icon name="close-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-content>

@@ -5,8 +5,6 @@ import { faPencilAlt, faTrashAlt, faPlus, faFilePdf, faSearch, faEraser, faChart
 import swal from 'sweetalert2';
 import jsPDF from 'jspdf'
 import 'jspdf-autotable';
-import { error } from 'protractor';
-import { AuthService } from '../../login/auth.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Chart } from 'chart.js';
 
@@ -31,7 +29,7 @@ export class ProductosComponent implements OnInit {
   roles: string[];
   filterNombre: string = '';
   graficaData: Chart;
-  constructor(private productoService: ProductosService, private authService: AuthService, private modalService: NgbModal) { }
+  constructor(private productoService: ProductosService, private modalService: NgbModal) { }
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
     if (event.keyCode == 13) {
@@ -43,7 +41,7 @@ export class ProductosComponent implements OnInit {
       this.filterNombre = sessionStorage.getItem('filtroProducto');
     }
     this.loadAll();
-    this.rellenarGrafica();
+    // this.rellenarGrafica();
     let empleado = JSON.parse(sessionStorage.getItem('empleado'));
     this.roles = empleado.roles;
   }
@@ -53,11 +51,13 @@ export class ProductosComponent implements OnInit {
       this.totalItems = res.totalElements;
       this.productosPaginated = res.content;
     })
+    this.productoService.getProductosAll().subscribe(res => {
+      this.productosAll = res;
+    })
   }
   hasRole(rol: string) {
-    if (this.roles) {
-      let value = this.roles.indexOf(rol);
-      return value > 0;
+    if (this.roles.includes(rol)) {
+      return true;
     } return false;
   }
   deleteProducto(idproducto: number) {
@@ -122,34 +122,106 @@ export class ProductosComponent implements OnInit {
     });
 
   }
-  abrirGrafica(grafica){
-    
-    this.modalService.open(grafica, {ariaLabelledBy: 'modal-basic-title'});
+  abrirGrafica(grafica) {
+    this.modalService.open(grafica, { size: 'large', ariaLabelledBy: 'modal-basic-title' });
+    this.rellenarGrafica();
   }
-  rellenarGrafica(){
-    this.graficaData = new Chart("graficaProducto"), {
-			labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-			datasets: [{
-				type: 'line',
-				label: 'Ganacia',
-				borderColor: '#FF5733',
-				borderWidth: 2,
-				fill: false,
-				data: []
-			}, {
-				type: 'bar',
-				label: 'Precio',
-				backgroundColor:'rgba(54, 162, 235, 0.2)',
-				data: [],
-				borderColor: 'white',
-				borderWidth: 2
-			}, {
-				type: 'bar',
-				label: 'Coste',
-				backgroundColor: 'rgba(54, 162, 235, 0.2)',
-				data: []
-			}]
-
-		};
+  rellenarGrafica() {
+    let labelsGrafica = [];
+    let porcentajeGrafica = [];
+    let costeGrafica = [];
+    let precioGrafica = [];
+    let porcentajeBeneficio: number = 0;
+    this.productosPaginated.forEach(producto => {
+      porcentajeBeneficio = (producto.precioProducto * 100) / producto.costeProducto;
+      labelsGrafica.push(producto.nombreProducto);
+      costeGrafica.push(producto.costeProducto);
+      precioGrafica.push(producto.precioProducto);
+      porcentajeGrafica.push(porcentajeBeneficio.toFixed(2));
+    })
+    const canvas: any = <HTMLElement>document.getElementById('graficaProducto');
+    const ctx = canvas.getContext('2d');
+    this.graficaData = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labelsGrafica,
+        datasets: [{
+          label: 'Coste producto',
+          data: costeGrafica,
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(206, 147, 216, 0.2)',
+            'rgba(121, 134, 203, 0.2)',
+            'rgba(77, 208, 225, 0.2)',
+            'rgba(220, 231, 117, 0.2)',
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)',
+            'rgba(206, 147, 216, 1)',
+            'rgba(121, 134, 203, 1)',
+            'rgba(77, 208, 225, 1)',
+            'rgba(220, 231, 117, 1)'
+          ],
+          borderWidth: 1
+        },
+        {
+          label: 'Precio producto',
+          data: precioGrafica,
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(206, 147, 216, 0.2)',
+            'rgba(121, 134, 203, 0.2)',
+            'rgba(77, 208, 225, 0.2)',
+            'rgba(220, 231, 117, 0.2)',
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)',
+            'rgba(206, 147, 216, 1)',
+            'rgba(121, 134, 203, 1)',
+            'rgba(77, 208, 225, 1)',
+            'rgba(220, 231, 117, 1)'
+          ],
+          borderWidth: 1
+        },
+        {
+          type: 'line',
+          label: 'Porcentaje Beneficio %',
+          borderColor: 'rgba(1, 87, 155, 1)',
+          borderWidth: 2,
+          fill: false,
+          data: porcentajeGrafica
+        }
+        ]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    });
   }
 }

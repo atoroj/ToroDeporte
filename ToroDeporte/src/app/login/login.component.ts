@@ -37,10 +37,10 @@ export class LoginComponent implements OnInit {
   login(){
     this.empleado = {
       ...new IEmpleado(),
-        usernameEmpleado: 'etoro',
-        contrasenaEmpleado: 'usertorodeporte'
-        // usernameEmpleado: this.loginForm.value.username,
-        // contrasenaEmpleado: this.loginForm.value.password
+        // usernameEmpleado: 'atoro',
+        // contrasenaEmpleado: 'admintorodeporte'
+        usernameEmpleado: this.loginForm.value.username,
+        contrasenaEmpleado: this.loginForm.value.password
       }
     if(this.loginForm.value.username == null || this.loginForm.value.password == null){
       swal('Error login', 'Usuario o contraseña incorrecto', 'error');

@@ -37,6 +37,7 @@ export class AuthService {
   }
   guardarEmpleado(token: string) {
     let payload = this.getDataToken(token);
+    console.log(payload);
     this.empleado = new IEmpleado();
     this.empleado.nombreEmpleado = payload.user_name;
     this.empleado.roles = payload.authorities;
@@ -54,7 +55,10 @@ export class AuthService {
       return JSON.parse(atob(token.split(".")[1]));
     } else return null;
   }
-
+  getIdEmpleado(){
+    let payload = this.getDataToken(this.dataToken);
+    return payload.idEmpleado;
+  }
   public get dataToken(): string {
     if (this.token) {
       return this.token;

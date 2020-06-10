@@ -30,12 +30,13 @@
       </div>
       <table id="productos" class="table table-striped" *ngIf="productosPaginated?.length>0">
         <thead>
-          <tr class="text-primary">
+          <tr class="text-dark">
             <th style="width: 64px"></th>
             <th>Nombre</th>
             <th>Categoria</th>
             <th>Precio</th>
             <th>Coste</th>
+            <th>Stock</th>
             <th></th>
           </tr>
         </thead>
@@ -49,6 +50,7 @@
             <td>{{ producto.categoriaProducto }}</td>
             <td>{{ producto.precioProducto }}</td>
             <td>{{ producto.costeProducto }}</td>
+            <td>{{ producto.stockProducto }}</td>
             <td class="text-rigth">
               <button type="button" name="editar" ngbTooltip="Editar" [routerLink]="['/productos/form', producto.idProducto, 'edit']" class="btn btn-primary btn-sm ml-1"><fa-icon [icon]="faPencilAlt"></fa-icon></button>
               <button type="button" *ngIf="hasRole('ROLE_ENCARGADO')" name="eliminar" ngbTooltip="Eliminar" (click)="deleteProducto(producto.idProducto)" class="btn btn-danger btn-sm ml-1"><fa-icon [icon]="faTrashAlt"></fa-icon></button>
@@ -67,7 +69,7 @@
       </button>
     </div>
     <div class="modal-body">
-      <canvas id="graficaProducto" width="400" height="400">{{graficaData}}</canvas>
+      <canvas id="graficaProducto" width="400" height="400"></canvas>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss()"><fa-icon [icon]="faArrowLeft"></fa-icon>&nbsp;Salir</button>
